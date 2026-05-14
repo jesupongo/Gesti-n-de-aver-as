@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { AveriaModule } from 'src/averia/averia.module';
@@ -10,7 +10,7 @@ import { JwtModule } from '@nestjs/jwt';
   controllers: [UserController],
   providers: [UserService],
   imports: [
-    AveriaModule,
+    forwardRef(() => AveriaModule),
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
       global: true,
