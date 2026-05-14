@@ -1,34 +1,60 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post
+} from '@nestjs/common';
 import { AveriaService } from './averia.service';
-import { CreateAveriaDto } from './dto/create-averia.dto';
-import { UpdateAveriaDto } from './dto/update-averia.dto';
+import { EstadoAveria } from './enums/estados.enum';
+import { ValoracionAveria } from './enums/valoracion.enum';
 
 @Controller('averia')
 export class AveriaController {
-  constructor(private readonly averiaService: AveriaService) {}
+  constructor(private readonly averiasService: AveriaService) {}
 
   @Post()
-  create(@Body() createAveriaDto: CreateAveriaDto) {
-    return this.averiaService.create(createAveriaDto);
+  create(
+    @Body()
+    createAveriaDto: {
+      nombre: string;
+      tipo: string;
+      ubicacion: string;
+      descripcion: string;
+    },
+  ) {
+    return this.averiasService.create(createAveriaDto);
   }
 
   @Get()
   findAll() {
-    return this.averiaService.findAll();
+    return this.averiasService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.averiaService.findOne(+id);
+  @Patch(':id/estado')
+  updateEstado(@Param('id') id: string, @Body('estado') estado: EstadoAveria) {
+    return this.averiasService.updateEstado(+id, estado);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAveriaDto: UpdateAveriaDto) {
-    return this.averiaService.update(+id, updateAveriaDto);
+  @Patch(':id/prioridad')
+  updatePrioridad(
+    @Param('id') id: string,
+    @Body('prioridad') prioridad: ValoracionAveria,
+  ) {
+    return this.averiasService.updatePrioridad(+id, prioridad);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.averiaService.remove(+id);
+  @Patch(':id/tecnico')
+  asignarTecnico(
+    @Param('id') id: string,
+    @Body('tecnicoId') tecnicoId: number,
+  ) {
+    return this.averiasService.asignarTecnico(+id, tecnicoId);
+  }
+
+  @Get('tecnicos')
+  getTecnicos() {
+    return this.averiasService.getTecnicos();
   }
 }

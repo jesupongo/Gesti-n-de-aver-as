@@ -1,0 +1,5 @@
+export enum EstadoAveria {
+  SIN_EMPEZAR = 'SIN_EMPEZAR',
+  EN_REPARACION = 'EN_REPARACION',
+  TERMINADA = 'TERMINADA',
+}
