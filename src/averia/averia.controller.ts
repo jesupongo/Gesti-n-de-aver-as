@@ -22,6 +22,7 @@ export class AveriaController {
       tipo: string;
       ubicacion: string;
       descripcion: string;
+      reportadorId?: number;
     },
   ) {
     return this.averiasService.create(createAveriaDto);
@@ -51,6 +52,11 @@ export class AveriaController {
     @Body('tecnicoId') tecnicoId: number,
   ) {
     return this.averiasService.asignarTecnico(+id, tecnicoId);
+  }
+
+  @Patch(':id/verificar')
+  verificar(@Param('id') id: string) {
+    return this.averiasService.verificar(+id);
   }
 
   @Get('tecnicos')

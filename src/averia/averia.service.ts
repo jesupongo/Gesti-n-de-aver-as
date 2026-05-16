@@ -51,18 +51,25 @@ export class AveriaService {
     tipo: string;
     ubicacion: string;
     descripcion: string;
+    reportadorId?: number;
   }) {
-    const invitado = await this.usuarioRepository.findOne({
+    let reportador = await this.usuarioRepository.findOne({
       where: { email: 'invitado@sistema.com' },
     });
-    if (!invitado)
-      throw new NotFoundException('Usuario invitado no configurado');
+
+    if (data.reportadorId) {
+      const user = await this.usuarioRepository.findOneBy({ id: data.reportadorId });
+      if (user) reportador = user;
+    }
+
+    if (!reportador)
+      throw new NotFoundException('Usuario reportador no encontrado');
 
     const averia = this.averiaRepository.create({
       ...data,
       estado: EstadoAveria.SIN_EMPEZAR,
       valoracion: ValoracionAveria.MENOR,
-      reportador: invitado,
+      reportador: reportador,
     });
 
     return this.averiaRepository.save(averia);
@@ -102,6 +109,14 @@ export class AveriaService {
     if (!tecnico) throw new NotFoundException();
 
     averia.reparador = tecnico;
+    return this.averiaRepository.save(averia);
+  }
+
+  async verificar(id: number) {
+    const averia = await this.averiaRepository.findOneBy({ id });
+    if (!averia) throw new NotFoundException();
+
+    averia.verificada = true;
     return this.averiaRepository.save(averia);
   }
 

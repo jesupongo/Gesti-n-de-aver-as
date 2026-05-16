@@ -40,9 +40,12 @@ export class Averia {
   @Column('text')
   descripcion: string;
 
-  @ManyToOne(() => User, usuario => usuario.averiasReportadas, { nullable: true })
+  @Column({ default: false })
+  verificada: boolean;
+
+  @ManyToOne(() => User, usuario => usuario.averiasReportadas, { nullable: true, onDelete: 'SET NULL' })
   reportador: User;
 
-  @ManyToOne(() => User, usuario => usuario.averiasAsignadas, { nullable: true })
+  @ManyToOne(() => User, usuario => usuario.averiasAsignadas, { nullable: true, onDelete: 'SET NULL' })
   reparador: User;
 }
