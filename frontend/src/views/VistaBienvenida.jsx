@@ -3,7 +3,7 @@ import React from 'react';
 export function VistaBienvenida({ navegar }) {
   const irAReporte = () => navegar('comunicar-averia');
   const irALogin = () => navegar('acceso');
-
+  //Renderiza la vista de bienvenida
   return (
     <section className="seccion-vista active contenedor-bienvenida">
       <div className="fondo-bienvenida">

@@ -176,41 +176,7 @@ export function VistaAdmin({ navegar, rolUsuario, nombreUsuario, idUsuario, actu
   return (
     <section className="seccion-vista active seccion-amplia">
       <div className="contenedor-admin">
-        <style dangerouslySetInnerHTML={{__html: `
-          /* Desktop Safe Defaults */
-          .seccion-amplia { max-width: 100% !important; padding: 2rem 5% !important; }
-          .contenedor-admin { max-width: 100% !important; width: 100% !important; }
-          .admin-acciones-mobile { display: none !important; }
-          .cabecera-superior { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 2rem; }
-          .flex-centrado { display: flex; align-items: center; gap: 1.5rem; }
-          .contenedor-acciones-derecha { display: flex; flex-direction: column; align-items: flex-end; }
-          .panel-usuario-cabecera { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 0.8rem 1.2rem; background-color: #f8f9fa; border-radius: 12px; border: 1px solid #E1E5F2; min-width: 550px; }
-          .boton-modificar-perfil { padding: 0.5rem 0.8rem !important; font-size: 0.8rem !important; width: auto !important; min-width: auto !important; white-space: nowrap !important; flex-shrink: 0 !important; }
-          .columna-usuario { display: flex; flex-direction: column; }
-          .nombre-usuario-cabecera { font-weight: bold; font-size: 1.05rem; }
-          .rol-usuario-cabecera { font-size: 0.85rem; color: #64748b; }
-          .botones-header-admin { display: flex; gap: 1rem; align-items: center; justify-content: flex-end; width: auto; }
-          .fila-buscador { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-          .contenedor-buscador-principal { flex: 1; margin-right: 2rem; max-width: 400px; display:flex; position:relative; }
-          
-          /* Mobile Overrides (Match the precise screenshot requested) */
-          @media (max-width: 768px) {
-             .admin-acciones-desktop { display: none !important; }
-             .admin-acciones-mobile { display: flex !important; width: 100%; gap: 1rem; justify-content: space-between; margin-top: 1rem; margin-bottom: 0.5rem; }
-             .admin-acciones-mobile button { flex: 1; margin: 0 !important; width: 100%; }
-             
-             .cabecera-superior { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 1.5rem; margin-bottom: 1rem; }
-             .flex-centrado { flex-direction: column !important; gap: 0.5rem; }
-             .contenedor-acciones-derecha { align-items: center !important; width: 100% !important; }
-             .panel-usuario-cabecera { min-width: 100% !important; width: 100% !important; flex-direction: column !important; padding: 1rem !important; }
-             
-             .fila-buscador { flex-direction: column-reverse !important; gap: 1rem; align-items: stretch !important; }
-             .botones-header-admin { width: 100% !important; justify-content: space-between !important; gap: 0.5rem; flex-wrap: nowrap !important; }
-             .botones-header-admin button { font-size: 0.75rem !important; padding: 0.5rem !important; flex: 1; white-space: nowrap; margin: 0!important; }
-             .contenedor-buscador-principal { margin-right: 0 !important; max-width: 100% !important; }
-             .input-buscador-principal { padding-left: 2.8rem !important; }
-          }
-        `}} />
+
         <div className="cabecera-vista">
           {(!isMobile) && (
             <button onClick={manejarNavegacionInicio} className="boton-volver">
@@ -223,27 +189,25 @@ export function VistaAdmin({ navegar, rolUsuario, nombreUsuario, idUsuario, actu
           
           {}
           <div className="cabecera-superior">
-            <div className="flex-centrado" style={{ position: 'relative' }}>
-              {isMobile && (
-                <div style={{ display: 'inline-block', position: 'relative' }}>
-                  <button 
+            <div className="flex-centrado contenedor-relativo">
+              {isMobile && (<><button 
                     onClick={() => setVerMenuMovil(!verMenuMovil)} 
-                    style={{ background: 'none', border: 'none', padding: '0 0.5rem 0 0', fontSize: '2rem', cursor: 'pointer', color: '#002b2b', display: 'flex', alignItems: 'center' }}
+                    className="boton-hamburguesa"
                   >
                     ☰
-                  </button>
+                  </button></>
+              )}
                   {verMenuMovil && (
-                    <div style={{ position: 'absolute', top: '100%', left: '0', background: '#fff', padding: '1rem', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,39,40,0.15)', display: 'flex', flexDirection: 'column', gap: '0.75rem', minWidth: '220px', border: '1px solid #E1E5F2', zIndex: 9999 }}>
-                      <button onClick={manejarNavegacionInicio} className="boton-volver" style={{ marginBottom: '0.5rem', color: '#ef476f', fontSize: '0.9rem' }}>
+                    <div className="menu-movil-desplegable">
+                      <button onClick={manejarNavegacionInicio} className="boton-volver boton-cerrar-sesion-movil">
                         <span className="icon-exit"></span> Cerrar Sesión
                       </button>
-                      <hr style={{ border: 'none', borderTop: '1px solid #E1E5F2', margin: '0 0 0.5rem 0' }} />
+                      <hr className="separador-menu-movil" />
                       
                       {rolUsuario === 'admin' && (
                         <button 
                           onClick={() => { setViewMode('pendientes'); setFiltros(prev => ({ ...prev, estado: '' })); setVerMenuMovil(false); }} 
-                          className={`boton ${viewMode === 'pendientes' ? 'boton-principal' : 'boton-secundario'}`}
-                          style={{ padding: '0.6rem', fontSize: '0.85rem', margin: 0 }}
+                          className={`boton ${viewMode === 'pendientes' ? 'boton-principal' : 'boton-secundario'} boton-menu-movil-opcion`}
                         >
                           Pendientes ({averias.filter(a => !a.verificada).length})
                         </button>
@@ -251,23 +215,19 @@ export function VistaAdmin({ navegar, rolUsuario, nombreUsuario, idUsuario, actu
                       
                       <button 
                         onClick={() => { setViewMode('publicadas'); setVerMenuMovil(false); }} 
-                        className={`boton ${viewMode === 'publicadas' ? 'boton-principal' : 'boton-secundario'}`}
-                        style={{ padding: '0.6rem', fontSize: '0.85rem', margin: 0 }}
+                        className={`boton ${viewMode === 'publicadas' ? 'boton-principal' : 'boton-secundario'} boton-menu-movil-opcion`}
                       >
                         {rolUsuario === 'admin' ? 'Publicadas' : 'Asignadas'} ({averias.filter(a => a.estado !== 'terminada' && (rolUsuario === 'tecnico' ? a.asignadoA === parseInt(idUsuario) : a.verificada)).length})
                       </button>
 
                       <button 
                         onClick={() => { setViewMode('terminadas'); setVerMenuMovil(false); }} 
-                        className={`boton ${viewMode === 'terminadas' ? 'boton-principal' : 'boton-secundario'}`}
-                        style={{ padding: '0.6rem', fontSize: '0.85rem', margin: 0 }}
+                        className={`boton ${viewMode === 'terminadas' ? 'boton-principal' : 'boton-secundario'} boton-menu-movil-opcion`}
                       >
                         Terminadas ({averias.filter(a => a.estado === 'terminada' && (rolUsuario === 'tecnico' ? a.asignadoA === parseInt(idUsuario) : a.verificada)).length})
                       </button>
                     </div>
                   )}
-                </div>
-              )}
               <div className="contenedor-logo">
                 <img src="/logo-silverfish.png" alt="Logo" className="imagen-logo" />
               </div>
@@ -292,10 +252,10 @@ export function VistaAdmin({ navegar, rolUsuario, nombreUsuario, idUsuario, actu
                 {}
                 {rolUsuario === 'admin' && (
                   <div className="admin-acciones-mobile">
-                    <button onClick={manejarNavegacionAveriasUsuarios} className="boton boton-secundario" style={{ borderRadius: '12px', padding: '0.6rem', fontSize: '0.9rem' }}>
+                    <button onClick={manejarNavegacionAveriasUsuarios} className="boton boton-secundario boton-accion-admin-movil">
                       USUARIOS
                     </button>
-                    <button onClick={() => navegar('comunicar-averia')} className="boton boton-principal" style={{ borderRadius: '12px', padding: '0.6rem', fontSize: '0.9rem', backgroundColor: '#20c997', color: 'white' }}>
+                    <button onClick={() => navegar('comunicar-averia')} className="boton boton-principal boton-nueva-averia-movil">
                       + AVERÍA
                     </button>
                   </div>
@@ -308,15 +268,14 @@ export function VistaAdmin({ navegar, rolUsuario, nombreUsuario, idUsuario, actu
             
             {}
             <div className="contenedor-buscador-principal">
-              <span className="icon-search icono-buscador-principal" style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#002b2b', opacity: 0.8, fontSize: '1.4rem', zIndex: 999 }}></span>
+              <span className="icon-search icono-buscador-principal icono-buscador-posicion"></span>
               <input 
                 type="text" 
                 name="busqueda" 
                 onChange={manejarCambioFiltro} 
-                className="control-formulario input-buscador-principal" 
+                className="control-formulario input-buscador-principal input-buscador-relleno" 
                 placeholder="Buscar por nombre, aula, estado..." 
                 value={filtros.busqueda}
-                style={{ paddingLeft: '65px' }}
               />
             </div>
 
@@ -365,10 +324,10 @@ export function VistaAdmin({ navegar, rolUsuario, nombreUsuario, idUsuario, actu
           </div>
         </div>
 
-        <div className="filtros-barra-admin" style={isMobile ? { display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', alignItems: 'center', gap: '0.4rem', width: '100%' } : {}}>
-          <span className="filtros-label" style={isMobile ? { whiteSpace: 'nowrap' } : {}}>Filtrar por:</span>
+        <div className={`filtros-barra-admin ${isMobile ? 'barra-filtros-movil' : ''}`}>
+          <span className={`filtros-label ${isMobile ? 'etiqueta-filtro-movil' : ''}`}>Filtrar por:</span>
           {viewMode !== 'pendientes' && (
-            <select name="estado" onChange={manejarCambioFiltro} className="control-formulario select-sm select-filtro" value={filtros.estado} style={isMobile ? { width: 'auto', minWidth: 'auto', fontSize: '0.8rem', padding: '0.3rem 1.8rem 0.3rem 0.6rem', border: '1px solid #E1E5F2', borderRadius: '8px' } : {}}>
+            <select name="estado" onChange={manejarCambioFiltro} className={`control-formulario select-sm select-filtro ${isMobile ? 'select-filtro-movil' : ''}`} value={filtros.estado}>
               <option value="">{isMobile ? 'Estados' : 'Todos los Estados'}</option>
               <option value="sin-empezar">Sin empezar</option>
               <option value="en-reparacion">En reparación</option>
@@ -377,13 +336,13 @@ export function VistaAdmin({ navegar, rolUsuario, nombreUsuario, idUsuario, actu
           )}
           {rolUsuario === 'admin' && (
             <>
-              <select name="tecnico" onChange={manejarCambioFiltro} className="control-formulario select-sm select-filtro" value={filtros.tecnico} style={isMobile ? { width: 'auto', minWidth: 'auto', fontSize: '0.8rem', padding: '0.3rem 1.8rem 0.3rem 0.6rem', border: '1px solid #E1E5F2', borderRadius: '8px' } : {}}>
+              <select name="tecnico" onChange={manejarCambioFiltro} className={`control-formulario select-sm select-filtro ${isMobile ? 'select-filtro-movil' : ''}`} value={filtros.tecnico}>
                 <option value="">{isMobile ? 'Técnicos' : 'Todos los Técnicos'}</option>
                 {techs.map(t => (
                     <option key={t.id} value={t.id}>{t.nombre}</option>
                 ))}
               </select>
-              <select name="prioridad" onChange={manejarCambioFiltro} className="control-formulario select-sm select-filtro" value={filtros.prioridad} style={isMobile ? { width: 'auto', minWidth: 'auto', fontSize: '0.8rem', padding: '0.3rem 1.8rem 0.3rem 0.6rem', border: '1px solid #E1E5F2', borderRadius: '8px' } : {}}>
+              <select name="prioridad" onChange={manejarCambioFiltro} className={`control-formulario select-sm select-filtro ${isMobile ? 'select-filtro-movil' : ''}`} value={filtros.prioridad}>
                 <option value="">{isMobile ? 'Prioridades' : 'Todas las Prioridades'}</option>
                 <option value="critica">Crítica</option>
                 <option value="menor">Menor</option>

@@ -1,0 +1,339 @@
+.seccion-amplia {
+  max-width: 100% !important;
+  padding: 2rem 5% !important;
+}
+
+.contenedor-admin {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.cabecera-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.flex-centrado {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.contenedor-acciones-derecha {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.panel-usuario-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.8rem 1.2rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #E1E5F2;
+  min-width: 550px;
+}
+
+.boton-modificar-perfil {
+  padding: 0.5rem 0.8rem !important;
+  font-size: 0.8rem !important;
+  width: auto !important;
+  min-width: auto !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+.columna-usuario {
+  display: flex;
+  flex-direction: column;
+}
+
+.nombre-usuario-cabecera {
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+.rol-usuario-cabecera {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.botones-header-admin {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-end;
+  width: auto;
+}
+
+.fila-buscador {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.contenedor-buscador-principal {
+  flex: 1;
+  margin-right: 2rem;
+  max-width: 400px;
+  display: flex;
+  position: relative;
+}
+
+.caja-busqueda input.control-formulario {
+  padding-left: 65px !important;
+}
+
+.contenedor-relativo {
+  position: relative;
+}
+
+.contenedor-menu-movil {
+  display: inline-block;
+  position: relative;
+}
+
+.boton-hamburguesa {
+  background: none;
+  border: none;
+  padding: 0 0.5rem 0 0;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #002b2b;
+  display: flex;
+  align-items: center;
+}
+
+.menu-movil-desplegable {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  padding: 1rem;
+  borderRadius: 12px;
+  box-shadow: 0 10px 25px rgba(0,39,40,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 220px;
+  border: 1px solid #E1E5F2;
+  z-index: 9999;
+}
+
+.boton-cerrar-sesion-movil {
+  margin-bottom: 0.5rem;
+  color: #ef476f;
+  font-size: 0.9rem;
+}
+
+.separador-menu-movil {
+  border: none;
+  border-top: 1px solid #E1E5F2;
+  margin: 0 0 0.5rem 0;
+}
+
+.boton-menu-movil-opcion {
+  padding: 0.6rem;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.boton-accion-admin-movil {
+  border-radius: 12px;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+}
+
+.boton-nueva-averia-movil {
+  border-radius: 12px;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  background-color: #20c997;
+  color: white;
+}
+
+.icono-buscador-posicion {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #002b2b;
+  opacity: 0.8;
+  font-size: 1.4rem;
+  z-index: 999;
+}
+
+.input-buscador-relleno {
+  padding-left: 65px;
+}
+
+.barra-filtros-movil {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.etiqueta-filtro-movil {
+  white-space: nowrap;
+}
+
+.select-filtro-movil {
+  width: auto;
+  min-width: auto;
+  font-size: 0.8rem;
+  padding: 0.3rem 1.8rem 0.3rem 0.6rem;
+  border: 1px solid #E1E5F2;
+  border-radius: 8px;
+}
+
+.contenedor-buscador-ancho-total {
+  position: relative;
+  width: 100%;
+}
+
+.input-buscador-ancho-total {
+  padding-left: 65px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .admin-acciones-desktop {
+    display: none !important;
+  }
+
+  .admin-acciones-mobile {
+    display: flex !important;
+    width: 100%;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .admin-acciones-mobile button {
+    flex: 1;
+    margin: 0 !important;
+    width: 100%;
+  }
+
+  .cabecera-superior {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .flex-centrado {
+    flex-direction: column !important;
+    gap: 0.5rem;
+  }
+
+  .contenedor-acciones-derecha {
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .panel-usuario-cabecera {
+    min-width: 100% !important;
+    width: 100% !important;
+    flex-direction: column !important;
+    padding: 1rem !important;
+  }
+
+  .fila-buscador {
+    flex-direction: column-reverse !important;
+    gap: 1rem;
+    align-items: stretch !important;
+  }
+
+  .botones-header-admin {
+    width: 100% !important;
+    justify-content: space-between !important;
+    gap: 0.5rem;
+    flex-wrap: nowrap !important;
+  }
+
+  .botones-header-admin button {
+    font-size: 0.75rem !important;
+    padding: 0.5rem !important;
+    flex: 1;
+    white-space: nowrap;
+    margin: 0 !important;
+  }
+
+  .contenedor-buscador-principal {
+    margin-right: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .input-buscador-principal {
+    padding-left: 2.8rem !important;
+  }
+
+  .cabecera-nombre-usuario {
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0.4rem !important;
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .cabecera-nombre-usuario h3.nombre-usuario {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-size: 0.95rem !important;
+    margin: 0 !important;
+    color: #002b2b !important;
+    text-align: left !important;
+  }
+
+  .contenedor-botones-usuario-movil {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 0.3rem !important;
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
+  }
+
+  .cabecera-nombre-usuario button {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+    font-weight: bold !important;
+    letter-spacing: 0.5px !important;
+    margin: 0 !important;
+    height: 28px !important;
+    width: auto !important;
+    min-width: 60px !important;
+    border-radius: 6px !important;
+    text-transform: uppercase !important;
+  }
+
+  .boton-modificar-usuario {
+    border: 1px solid #E1E5F2 !important;
+    background: white !important;
+    color: #002b2b !important;
+  }
+
+  .boton-eliminar-usuario {
+    background: #ef476f !important;
+    color: white !important;
+    border: none !important;
+  }
+}

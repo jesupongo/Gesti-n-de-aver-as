@@ -13,6 +13,7 @@ function App() {
   const [nombreUsuario, setNombreUsuario] = useState(localStorage.getItem('n') || ''); 
   const [idUsuario, setIdUsuario] = useState(localStorage.getItem('u')); 
 
+  //Te lleva a otra vista pasando el id de la misma al hacer clic en el botón
   const navegar = (viewId, push = true) => { 
     setVistaActual(viewId);
     localStorage.setItem('v', viewId);
@@ -51,6 +52,7 @@ function App() {
     }
   }, [vistaActual]);
 
+  //Guarda los datos del usuario en el localStorage y te lleva a la vista correspondiente
   const iniciarSesionComo = (rol, nombre, id) => {
     localStorage.setItem('r', rol);
     localStorage.setItem('n', nombre);
@@ -62,6 +64,7 @@ function App() {
     navegar(inicial);
   };
 
+  //Cierra sesión y te lleva a la vista de bienvenida
   const cerrarSesion = () => {
     localStorage.removeItem('r');
     localStorage.removeItem('n');
@@ -72,6 +75,7 @@ function App() {
     navegar('bienvenida');
   };
 
+  //Renderiza la vista correspondiente
   return (
     <main id="app-container">
       {vistaActual === 'bienvenida' && <VistaBienvenida navegar={navegar} />}

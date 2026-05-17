@@ -11,7 +11,7 @@ export function VistaUsuariosAverias({ navegar, rolUsuario }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  
+  //Obtiene el listado de usuarios y sus averías
   useEffect(() => {
     fetch('/user')
       .then(res => res.json())
@@ -124,7 +124,7 @@ export function VistaUsuariosAverias({ navegar, rolUsuario }) {
       </section>
     );
   }
-
+  //Renderiza la vista de usuarios y averías
   return (
     <section className="seccion-vista active seccion-amplia">
       <div className="tarjeta tarjeta-amplia">
@@ -134,65 +134,7 @@ export function VistaUsuariosAverias({ navegar, rolUsuario }) {
           </button>
         </div>
         
-        <style dangerouslySetInnerHTML={{__html: `
-          /* FORZANDO PADDING BUSCADOR */
-          .caja-busqueda input.control-formulario {
-             padding-left: 65px !important;
-          }
-          
-          @media (max-width: 768px) {
-            .cabecera-nombre-usuario {
-               display: flex !important;
-               flex-flow: row nowrap !important;
-               align-items: center !important;
-               justify-content: flex-start !important;
-               gap: 0.4rem !important;
-               width: 100% !important;
-               margin-bottom: 0.5rem !important;
-            }
-            .cabecera-nombre-usuario h3.nombre-usuario {
-               flex: 1 1 auto !important;
-               min-width: 0 !important;
-               white-space: nowrap !important;
-               overflow: hidden !important;
-               text-overflow: ellipsis !important;
-               font-size: 0.95rem !important;
-               margin: 0 !important;
-               color: #002b2b !important;
-               text-align: left !important;
-            }
-            .contenedor-botones-usuario-movil {
-               display: flex !important;
-               flex-direction: row !important;
-               flex-wrap: nowrap !important;
-               gap: 0.3rem !important;
-               flex: 0 0 auto !important;
-               margin-left: auto !important;
-            }
-            .cabecera-nombre-usuario button {
-               padding: 4px 8px !important;
-               font-size: 10px !important;
-               font-weight: bold !important;
-               letter-spacing: 0.5px !important;
-               margin: 0 !important;
-               height: 28px !important;
-               width: auto !important;
-               min-width: 60px !important;
-               border-radius: 6px !important;
-               text-transform: uppercase !important;
-            }
-            .boton-modificar-usuario {
-               border: 1px solid #E1E5F2 !important;
-               background: white !important;
-               color: #002b2b !important;
-            }
-            .boton-eliminar-usuario {
-               background: #ef476f !important;
-               color: white !important;
-               border: none !important;
-            }
-          }
-        `}} />
+
         <div className="cabecera-panel cabecera-panel-margin">
           <div className="flex-centrado">
             <div className="contenedor-logo">
@@ -211,15 +153,14 @@ export function VistaUsuariosAverias({ navegar, rolUsuario }) {
           </button>
         </div>
           
-          <div className="caja-busqueda caja-busqueda-margin" style={{ position: 'relative', width: '100%' }}>
-            <span className="icon-search" style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#002b2b', opacity: 0.8, fontSize: '1.4rem', zIndex: 999 }}></span>
+          <div className="caja-busqueda caja-busqueda-margin contenedor-buscador-ancho-total">
+            <span className="icon-search icono-buscador-posicion"></span>
             <input 
               type="text"
               onChange={manejarCambioBusqueda}
-              className="control-formulario" 
+              className="control-formulario input-buscador-ancho-total" 
               placeholder="Buscar por nombre o email..." 
               value={terminoBusqueda} 
-              style={{ paddingLeft: '65px', width: '100%' }}
             />
           </div>
 
