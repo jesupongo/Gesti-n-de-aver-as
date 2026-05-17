@@ -21,7 +21,7 @@ import { AveriaModule } from './averia/averia.module';
       password: process.env.DB_PASSWORD || 'postgres',
       database: process.env.DB_NAME || 'averias',
       entities: [User, Averia],
-      synchronize: true, // Auto-create tables based on entities for local dev
+      synchronize: true, 
     }),
     AveriaModule,
   ],

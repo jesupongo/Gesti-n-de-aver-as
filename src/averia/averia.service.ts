@@ -6,6 +6,7 @@ import { Averia } from './entities/averia.entity';
 import { EstadoAveria } from './enums/estados.enum';
 import { ValoracionAveria } from './enums/valoracion.enum';
 import { RolUsuario } from 'src/user/enum/rol.enum';
+import { CreateAveriaDto } from './dto/create-averia.dto';
 
 @Injectable()
 export class AveriaService {
@@ -17,20 +18,23 @@ export class AveriaService {
   ) {}
 
   async onModuleInit() {
-    // Scaffold un usuario invitado dummy para el endpoint público
+    
     const email = 'invitado@sistema.com';
     let invitado = await this.usuarioRepository.findOne({ where: { email } });
     if (!invitado) {
       invitado = this.usuarioRepository.create({
-        nombre: 'Invitado',
+        nombre: 'Sin Registrar',
         email,
-        password: '', // Dummy
+        password: '', 
         rol: RolUsuario.PERSONAL,
       });
       await this.usuarioRepository.save(invitado);
+    } else if (invitado.nombre !== 'Sin Registrar') {
+      invitado.nombre = 'Sin Registrar';
+      await this.usuarioRepository.save(invitado);
     }
 
-    // Scaffold un tecnico dummy para pruebas de UI si no existen tecnicos
+    
     const tecEmail = 'jorge@sistema.com';
     let jorge = await this.usuarioRepository.findOne({
       where: { email: tecEmail },
@@ -46,33 +50,39 @@ export class AveriaService {
     }
   }
 
-  async create(data: {
-    nombre: string;
-    tipo: string;
-    ubicacion: string;
-    descripcion: string;
-    reportadorId?: number;
-  }) {
+  async create(createAveriaDto: CreateAveriaDto) {
+    console.log('--- CREATING AVERIA ---');
+    console.log('Incoming DTO:', createAveriaDto);
+    const { reportadorId, ...rest } = createAveriaDto;
+
     let reportador = await this.usuarioRepository.findOne({
       where: { email: 'invitado@sistema.com' },
     });
 
-    if (data.reportadorId) {
-      const user = await this.usuarioRepository.findOneBy({ id: data.reportadorId });
-      if (user) reportador = user;
+    if (reportadorId && reportadorId !== 'null' && reportadorId !== 'undefined') {
+      const id = typeof reportadorId === 'string' ? parseInt(reportadorId) : reportadorId;
+      if (!isNaN(id)) {
+        const user = await this.usuarioRepository.findOneBy({ id: id as any });
+        if (user) reportador = user;
+      }
     }
 
-    if (!reportador)
-      throw new NotFoundException('Usuario reportador no encontrado');
+    if (!reportador) {
+      console.error('ERROR: Reportador not found!');
+      throw new NotFoundException('Usuario reportador no encontrado (Sin Registrar no inicializado)');
+    }
 
     const averia = this.averiaRepository.create({
-      ...data,
-      estado: EstadoAveria.SIN_EMPEZAR,
-      valoracion: ValoracionAveria.MENOR,
+      ...rest,
+      estado: rest.estado || EstadoAveria.SIN_EMPEZAR,
+      valoracion: rest.valoracion || ValoracionAveria.MENOR,
       reportador: reportador,
     });
 
-    return this.averiaRepository.save(averia);
+    console.log('Saving Averia:', averia);
+    const saved = await this.averiaRepository.save(averia);
+    console.log('Saved successfully with ID:', saved.id);
+    return saved;
   }
 
   findAll() {
@@ -83,41 +93,57 @@ export class AveriaService {
   }
 
   async updateEstado(id: number, estado: EstadoAveria) {
+    console.log(`Updating Averia ${id} status to: ${estado}`);
     const averia = await this.averiaRepository.findOneBy({ id });
-    if (!averia) throw new NotFoundException();
+    if (!averia) throw new NotFoundException('Avería no encontrada');
 
     averia.estado = estado;
     if (estado === EstadoAveria.TERMINADA) {
       averia.fecha_reparacion = new Date();
     }
-    return this.averiaRepository.save(averia);
+    const result = await this.averiaRepository.save(averia);
+    console.log(`Averia ${id} updated successfully`);
+    return result;
   }
 
   async updatePrioridad(id: number, valoracion: ValoracionAveria) {
+    console.log(`Updating Averia ${id} priority to: ${valoracion}`);
     const averia = await this.averiaRepository.findOneBy({ id });
-    if (!averia) throw new NotFoundException();
+    if (!averia) throw new NotFoundException('Avería no encontrada');
 
     averia.valoracion = valoracion;
-    return this.averiaRepository.save(averia);
+    const result = await this.averiaRepository.save(averia);
+    console.log(`Averia ${id} priority updated`);
+    return result;
   }
 
   async asignarTecnico(id: number, tecnicoId: number) {
-    const averia = await this.averiaRepository.findOneBy({ id });
-    if (!averia) throw new NotFoundException();
+    console.log(`Assigning Averia ${id} to technician: ${tecnicoId}`);
+    const averia = await this.averiaRepository.findOne({ where: { id }, relations: ['reparador'] });
+    if (!averia) throw new NotFoundException('Avería no encontrada');
 
-    const tecnico = await this.usuarioRepository.findOneBy({ id: tecnicoId });
-    if (!tecnico) throw new NotFoundException();
+    if (!tecnicoId || isNaN(tecnicoId)) {
+      averia.reparador = null;
+    } else {
+      const tecnico = await this.usuarioRepository.findOneBy({ id: tecnicoId });
+      if (!tecnico) throw new NotFoundException('Técnico no encontrado');
+      averia.reparador = tecnico;
+    }
 
-    averia.reparador = tecnico;
-    return this.averiaRepository.save(averia);
+    const result = await this.averiaRepository.save(averia);
+    console.log(`Averia ${id} assigned successfully`);
+    return result;
   }
 
   async verificar(id: number) {
+    console.log(`Verifying/Publishing Averia ${id}`);
     const averia = await this.averiaRepository.findOneBy({ id });
-    if (!averia) throw new NotFoundException();
+    if (!averia) throw new NotFoundException('Avería no encontrada');
 
     averia.verificada = true;
-    return this.averiaRepository.save(averia);
+    const result = await this.averiaRepository.save(averia);
+    console.log(`Averia ${id} verified and published`);
+    return result;
   }
 
   getTecnicos() {

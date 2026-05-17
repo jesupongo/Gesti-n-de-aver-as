@@ -1,19 +1,20 @@
 import {
-  IsDateString,
   IsEnum,
+  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
-  IsUUID,
 } from 'class-validator';
 import { EstadoAveria } from '../enums/estados.enum';
 import { ValoracionAveria } from '../enums/valoracion.enum';
 
 export class CreateAveriaDto {
   @IsString()
+  @IsNotEmpty()
   nombre: string;
 
   @IsString()
+  @IsNotEmpty()
   tipo: string;
 
   @IsEnum(ValoracionAveria)
@@ -24,16 +25,14 @@ export class CreateAveriaDto {
   @IsOptional()
   estado?: EstadoAveria;
 
-  @IsDateString()
-  fecha_comunica: Date;
-
   @IsString()
+  @IsNotEmpty()
   ubicacion: string;
 
   @IsString()
+  @IsNotEmpty()
   descripcion: string;
 
-  @IsUUID()
   @IsOptional()
-  reportadorId?: string;
+  reportadorId?: any;
 }

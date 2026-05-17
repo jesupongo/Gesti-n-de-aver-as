@@ -10,21 +10,14 @@ import { AveriaService } from './averia.service';
 import { EstadoAveria } from './enums/estados.enum';
 import { ValoracionAveria } from './enums/valoracion.enum';
 
+import { CreateAveriaDto } from './dto/create-averia.dto';
+
 @Controller('averia')
 export class AveriaController {
   constructor(private readonly averiasService: AveriaService) {}
 
   @Post()
-  create(
-    @Body()
-    createAveriaDto: {
-      nombre: string;
-      tipo: string;
-      ubicacion: string;
-      descripcion: string;
-      reportadorId?: number;
-    },
-  ) {
+  create(@Body() createAveriaDto: CreateAveriaDto) {
     return this.averiasService.create(createAveriaDto);
   }
 

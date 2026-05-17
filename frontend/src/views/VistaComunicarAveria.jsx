@@ -21,7 +21,7 @@ export function VistaComunicarAveria({ navegar, idUsuario }) {
         tipo: categoria, 
         ubicacion, 
         descripcion,
-        reportadorId: idUsuario
+        reportadorId: idUsuario ? parseInt(idUsuario) : undefined
       })
     })
     .then(res => {

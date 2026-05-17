@@ -75,7 +75,7 @@ p {
   animation: fadeIn 0.4s ease forwards;
   
   &.seccion-amplia {
-    max-width: 100%;
+    max-width: 1200px;
   }
 }
 
@@ -267,8 +267,8 @@ textarea.control-formulario {
     padding: 1rem;
   }
 
-  .card {
-    padding: 2rem 1.5rem;
+  .tarjeta {
+    padding: 2rem 1.25rem !important; /* Fixed: previously targeted '.card' instead of '.tarjeta' */
   }
 
   h1 {
@@ -442,11 +442,15 @@ textarea.control-formulario {
 
 .acciones-averia {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
   margin-top: 0.5rem;
   border-top: 1px dashed #E1E5F2;
   padding-top: 1rem;
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .select-sm {
@@ -655,7 +659,8 @@ textarea.control-formulario {
     color: var(--color-lime);
   }
 
-  &.icono-login {
+  &.icono-login,
+  &.icono-usuario {
     background: rgba(191, 219, 247, 0.2);
     color: var(--color-light-blue);
   }
@@ -1140,4 +1145,843 @@ textarea.control-formulario {
 .subtitulo-cabecera-ajuste {
   margin: 0;
   line-height: 1.4;
+}
+
+/* ==========================================================================
+   Nuevas clases para eliminar estilos en línea y mejorar mantenibilidad
+   ========================================================================== */
+
+.contenedor-admin {
+  padding: 1rem 0;
+}
+
+.contenedor-acciones-derecha {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  
+  @media (max-width: 768px) {
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.panel-usuario-cabecera {
+  display: flex; 
+  align-items: center;
+  justify-content: space-between; 
+  gap: 1.5rem; 
+  padding: 1rem 1.5rem; 
+  background-color: var(--color-bg-secondary, #f8f9fa); 
+  border-radius: var(--radius-md);
+  border: 1px solid #E1E5F2;
+  min-width: 350px;
+  
+  &.personal {
+    min-width: 420px;
+  }
+
+  @media (max-width: 768px) {
+    min-width: unset !important;
+    width: 100% !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    align-items: center !important;
+    text-align: center !important;
+
+    .columna-usuario {
+      align-items: center !important;
+    }
+    
+    .boton-modificar-perfil {
+      width: 100% !important;
+    }
+  }
+}
+
+.columna-usuario {
+  display: flex;
+  flex-direction: column;
+}
+
+.nombre-usuario-cabecera {
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: var(--color-dark, #333);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.rol-usuario-cabecera {
+  font-size: 0.85rem;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.boton-modificar-perfil {
+  margin-top: 0 !important;
+  padding: 0.55rem 1.4rem !important;
+  font-size: 0.85rem !important;
+  white-space: nowrap;
+  border-radius: var(--radius-md) !important;
+}
+
+.fila-buscador {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  flex-wrap: nowrap;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+}
+
+.contenedor-buscador-principal {
+  position: relative;
+  flex: 1;
+}
+
+.icono-buscador-principal {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.6;
+  font-size: 20px;
+}
+
+.input-buscador-principal {
+  width: 100%;
+  padding-left: 3.5rem !important;
+  padding-right: 1.5rem !important;
+  border-radius: 50px !important;
+  background-color: var(--color-white) !important;
+  border: 1px solid #d1d5db !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  margin: 0 !important;
+}
+
+.botones-header-admin {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  flex-wrap: nowrap;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    
+    .boton-header,
+    .boton-usuarios-admin,
+    .boton-nueva-averia-admin {
+      flex: 1;
+      min-width: 110px;
+      justify-content: center;
+      text-align: center;
+    }
+    
+    .divisor-cabecera {
+      display: none;
+    }
+  }
+}
+
+.divisor-cabecera {
+  width: 1px;
+  height: 24px;
+  background-color: #d1d5db;
+  margin: 0 0.25rem;
+}
+
+.boton-usuarios-admin {
+  margin: 0 !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.85rem !important;
+  width: auto !important;
+  white-space: nowrap;
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #e2e8f0 !important;
+  
+  &:hover {
+    background-color: #e2e8f0 !important;
+  }
+}
+
+.boton-nueva-averia-admin {
+  margin: 0 !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.85rem !important;
+  width: auto !important;
+  white-space: nowrap;
+  background-color: #2ecc71 !important;
+  color: white !important;
+  border: none !important;
+  
+  &:hover {
+    background-color: #27ae60 !important;
+  }
+}
+
+.boton-publicar-averia {
+  margin-left: 1rem;
+  padding: 0.4rem 1rem;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.8rem;
+  transition: background-color var(--transition-fast);
+  
+  &:hover {
+    background-color: #27ae60;
+  }
+}
+
+.campo-estatico-contenedor {
+  opacity: 0.7;
+}
+
+.valor-estatico {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.cuerpo-personal {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.tarjeta-personal-nueva {
+  flex: 1;
+  min-width: 400px;
+  
+  @media (max-width: 900px) {
+    min-width: 100%;
+  }
+}
+
+.tarjeta-personal-historial {
+  flex: 1.5;
+  min-width: 400px;
+  
+  @media (max-width: 900px) {
+    min-width: 100%;
+  }
+}
+
+.titulo-seccion-tarjeta {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.tarjeta-vacia {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.texto-vacio {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.lista-averias-columna {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+}
+
+.tarjeta-averia-personal {
+  background-color: white;
+  display: block;
+  border-left: 4px solid #0056b3;
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.cabecera-tarjeta-personal {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.titulo-tarjeta-personal {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.meta-tarjeta-personal {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 0.75rem;
+}
+
+.ubicacion-tarjeta-personal {
+  font-weight: bold;
+  color: #333;
+}
+
+.descripcion-tarjeta-personal {
+  font-size: 0.9rem;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.cabecera-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    text-align: center;
+    
+    .flex-centrado {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .boton-crear-usuario-cabecera {
+      width: 100% !important;
+    }
+  }
+}
+
+.boton-crear-usuario-cabecera {
+  margin-top: 0 !important;
+  padding: 0.5rem 1.2rem !important;
+  font-size: 0.85rem !important;
+  width: auto !important;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.caja-busqueda-margin {
+  margin-bottom: 2rem;
+}
+
+.cabecera-nombre-usuario {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    
+    .nombre-usuario {
+      text-align: center;
+      white-space: normal !important;
+    }
+    
+    .boton-modificar-usuario,
+    .boton-eliminar-usuario {
+      width: 100% !important;
+      text-align: center;
+    }
+  }
+}
+
+.boton-modificar-usuario {
+  padding: 0.4rem 0.8rem !important;
+  font-size: 0.75rem !important;
+  margin-top: 0 !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.boton-eliminar-usuario {
+  padding: 0.4rem 0.8rem !important;
+  font-size: 0.75rem !important;
+  margin-top: 0 !important;
+  border-radius: var(--radius-md) !important;
+  background-color: #e74c3c !important;
+  color: white !important;
+  border: none !important;
+  
+  &:hover {
+    background-color: #c0392b !important;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); 
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4vh 1rem 2rem;
+  overflow-y: auto;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+
+.tarjeta-modal {
+  width: 450px;
+  max-width: 100%;
+  padding: 2.5rem !important;
+
+  @media (max-width: 480px) {
+    padding: 1.5rem 1rem !important;
+  }
+}
+
+.titulo-modal {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.botones-modal-contenedor {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 0.75rem;
+    
+    .boton-modal {
+      width: 100%;
+    }
+  }
+}
+
+.boton-modal {
+  margin-top: 0 !important;
+}
+
+/* ==========================================================================
+   DISEÑO COMPLETAMENTE RESPONSIVO — TODOS LOS BREAKPOINTS
+   ========================================================================== */
+
+/* ─── ANTI-OVERFLOW GLOBAL ─────────────────────────────────────────────── */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  min-width: 0; /* Evita que los hijos flex/grid expandan el padre */
+}
+
+/* ─── TABLET (≤ 900px) ─────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  #app-container {
+    padding: 1.5rem;
+    align-items: flex-start;
+  }
+
+  /* Grid de averías: 1 columna en tablet */
+  .lista-averias {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Tarjeta amplia: quitar padding excesivo */
+  .tarjeta-amplia {
+    padding: 1.5rem !important;
+  }
+
+  /* Buscador + botones: apilar verticalmente */
+  .fila-buscador {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+  }
+
+  .contenedor-buscador-principal {
+    width: 100% !important;
+    flex: unset !important;
+  }
+
+  .input-buscador-principal {
+    width: 100% !important;
+  }
+
+  /* Botones de filtro: envolver */
+  .botones-header-admin {
+    width: 100% !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+  }
+
+  .botones-header-admin .boton-header,
+  .botones-header-admin .boton-usuarios-admin,
+  .botones-header-admin .boton-nueva-averia-admin {
+    flex: 1 1 calc(50% - 0.5rem) !important;
+    min-width: 100px !important;
+    justify-content: center !important;
+    display: inline-flex !important;
+    font-size: 0.8rem !important;
+    padding: 0.6rem 0.75rem !important;
+    white-space: nowrap !important;
+  }
+
+  .botones-header-admin .divisor-cabecera {
+    display: none !important;
+  }
+
+  /* Filtros: apilar */
+  .filtros-barra-admin {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+  }
+
+  .select-filtro {
+    width: 100% !important;
+  }
+
+  /* Acciones de avería: 1 columna */
+  .acciones-averia {
+    grid-template-columns: 1fr !important;
+  }
+
+  .columna-doble {
+    grid-column: span 1 !important;
+  }
+
+  /* Cuerpo personal: apilar */
+  .cuerpo-personal {
+    flex-direction: column !important;
+  }
+
+  .tarjeta-personal-nueva,
+  .tarjeta-personal-historial {
+    min-width: 100% !important;
+    flex: unset !important;
+  }
+}
+
+/* ─── MÓVIL (≤ 640px) ──────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  #app-container {
+    padding: 0.75rem;
+  }
+
+  /* ── Contenedores generales ── */
+  .seccion-vista {
+    max-width: 100% !important;
+  }
+
+  .tarjeta {
+    padding: 1.5rem 1.25rem !important;
+    border-radius: 16px !important;
+  }
+
+  .tarjeta-amplia {
+    padding: 1.25rem 1rem !important;
+    border-radius: 16px !important;
+  }
+
+  .contenedor-admin {
+    padding: 0.5rem 0 !important;
+  }
+
+  /* ── Cabecera de sesión (logout) ── */
+  .cabecera-vista {
+    margin-bottom: 1.25rem !important;
+  }
+
+  /* ── Cabecera superior del panel ── */
+  .cabecera-superior {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1rem !important;
+  }
+
+  .cabecera-superior .flex-centrado {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+  }
+
+  .texto-titulo {
+    font-size: 1.35rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .texto-subtitulo {
+    font-size: 0.82rem !important;
+  }
+
+  /* ── Tarjeta de perfil de usuario ── */
+  .contenedor-acciones-derecha {
+    align-items: stretch !important;
+    width: 100% !important;
+  }
+
+  .panel-usuario-cabecera {
+    min-width: unset !important;
+    width: 100% !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    padding: 0.9rem 1rem !important;
+  }
+
+  .nombre-usuario-cabecera {
+    font-size: 0.95rem !important;
+    white-space: normal !important;
+  }
+
+  .rol-usuario-cabecera {
+    font-size: 0.78rem !important;
+    white-space: normal !important;
+  }
+
+  .boton-modificar-perfil {
+    padding: 0.5rem 0.9rem !important;
+    font-size: 0.75rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* ── Botones de pestaña ── */
+  .botones-header-admin .boton-header,
+  .botones-header-admin .boton-usuarios-admin,
+  .botones-header-admin .boton-nueva-averia-admin {
+    flex: 1 1 calc(50% - 0.5rem) !important;
+    font-size: 0.75rem !important;
+    padding: 0.55rem 0.5rem !important;
+    letter-spacing: 0 !important;
+  }
+
+  /* ── Filtros ── */
+  .filtros-barra-admin {
+    margin-top: 1rem !important;
+  }
+
+  .filtros-label {
+    font-size: 0.85rem !important;
+  }
+
+  /* ── Tarjeta de avería ── */
+  .tarjeta-averia {
+    padding: 1rem 0.9rem !important;
+    border-radius: 10px !important;
+  }
+
+  .cabecera-averia {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.6rem !important;
+  }
+
+  .titulo-averia {
+    font-size: 1rem !important;
+  }
+
+  .meta-averia {
+    flex-wrap: wrap !important;
+    gap: 0.3rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .boton-publicar-averia {
+    width: 100% !important;
+    margin-left: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding: 0.55rem 1rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .acciones-averia {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+    padding-top: 0.75rem !important;
+  }
+
+  .columna-doble {
+    grid-column: span 1 !important;
+  }
+
+  .select-sm {
+    font-size: 0.85rem !important;
+    padding: 0.55rem 0.6rem !important;
+    padding-right: 2rem !important;
+  }
+
+  .label-sm {
+    font-size: 0.7rem !important;
+  }
+
+  /* ── Página Usuarios y Averías ── */
+  .cabecera-panel {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1rem !important;
+  }
+
+  .cabecera-panel .flex-centrado {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+  }
+
+  .boton-crear-usuario-cabecera {
+    width: 100% !important;
+    justify-content: center !important;
+    margin-top: 0 !important;
+    padding: 0.75rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  .tarjeta-usuario {
+    padding: 1rem 0.9rem !important;
+    border-radius: 10px !important;
+  }
+
+  .cabecera-usuario {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+
+  .cabecera-nombre-usuario {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    gap: 0.5rem !important;
+  }
+
+  .nombre-usuario {
+    font-size: 1.1rem !important;
+  }
+
+  .boton-modificar-usuario,
+  .boton-eliminar-usuario {
+    width: 100% !important;
+    justify-content: center !important;
+    display: inline-flex !important;
+    padding: 0.65rem 1rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  .item-averia-usuario {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+  }
+
+  /* ── Formulario ComunicarAveria y CrearUsuario ── */
+  .cabecera-con-logo {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+  }
+
+  .control-formulario {
+    font-size: 0.95rem !important;
+    padding: 0.85rem 1rem !important;
+  }
+
+  textarea.control-formulario {
+    min-height: 100px !important;
+  }
+
+  .boton {
+    padding: 0.95rem 1.5rem !important;
+    font-size: 0.92rem !important;
+  }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    inset: 0 !important;
+    padding: 3vh 0.75rem 2rem !important;
+    align-items: flex-start !important;
+  }
+
+  .tarjeta-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 1.5rem 1.1rem !important;
+    border-radius: 16px !important;
+  }
+
+  .botones-modal-contenedor {
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+  }
+
+  .boton-modal {
+    width: 100% !important;
+    margin-top: 0 !important;
+  }
+
+  /* ── Vista de Login ── */
+  .cabecera-login-ajuste {
+    margin-bottom: 1.5rem !important;
+    margin-top: 0 !important;
+  }
+
+  .demo-botones-flex {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+
+  .boton-demo {
+    width: 100% !important;
+  }
+
+  /* ── Vista personal ── */
+  .cabecera-tarjeta-personal {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+  }
+
+  /* ── Bienvenida ── */
+  .titulo-bienvenida {
+    font-size: 1.8rem !important;
+  }
+
+  .subtitulo-bienvenida {
+    font-size: 0.9rem !important;
+  }
+}
+
+/* ─── MÓVIL PEQUEÑO (≤ 400px) ─────────────────────────────────────────── */
+@media (max-width: 400px) {
+  #app-container {
+    padding: 0.5rem;
+  }
+
+  .panel-usuario-cabecera {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .boton-modificar-perfil {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .titulo-bienvenida {
+    font-size: 1.5rem !important;
+  }
+
+  .tarjeta {
+    padding: 1.25rem 1rem !important;
+  }
 }

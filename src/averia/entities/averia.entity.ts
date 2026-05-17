@@ -47,5 +47,5 @@ export class Averia {
   reportador: User;
 
   @ManyToOne(() => User, usuario => usuario.averiasAsignadas, { nullable: true, onDelete: 'SET NULL' })
-  reparador: User;
+  reparador: User | null;
 }

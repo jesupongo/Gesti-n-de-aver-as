@@ -23,7 +23,7 @@ export function VistaAcceso({ navegar, iniciarSesionComo }) {
     })
     .then(data => {
       setCargando(false);
-      // Mapear rol de DB a rol de Frontend
+      
       let rolFrontend = 'personal';
       if (data.user.rol === 'ADMINISTRADOR') rolFrontend = 'admin';
       if (data.user.rol === 'MANTENIMIENTO') rolFrontend = 'tecnico';

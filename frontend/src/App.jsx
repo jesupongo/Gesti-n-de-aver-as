@@ -8,12 +8,12 @@ import { VistaUsuariosAverias } from './views/VistaUsuariosAverias';
 import { VistaPersonal } from './views/VistaPersonal';
 
 function App() {
-  const [vistaActual, setVistaActual] = useState(localStorage.getItem('v') || 'bienvenida'); //pantalla actual
-  const [rolUsuario, setRolUsuario] = useState(localStorage.getItem('r')); //rol del usuario
-  const [nombreUsuario, setNombreUsuario] = useState(localStorage.getItem('n') || ''); //nombre del usuario
-  const [idUsuario, setIdUsuario] = useState(localStorage.getItem('u')); //id del usuario
+  const [vistaActual, setVistaActual] = useState(localStorage.getItem('v') || 'bienvenida'); 
+  const [rolUsuario, setRolUsuario] = useState(localStorage.getItem('r')); 
+  const [nombreUsuario, setNombreUsuario] = useState(localStorage.getItem('n') || ''); 
+  const [idUsuario, setIdUsuario] = useState(localStorage.getItem('u')); 
 
-  const navegar = (viewId, push = true) => { //cambia pantalla y actualiza historial para retroceder
+  const navegar = (viewId, push = true) => { 
     setVistaActual(viewId);
     localStorage.setItem('v', viewId);
     if (push) {
@@ -32,13 +32,24 @@ function App() {
     };
 
     window.addEventListener('popstate', manejarCambioHistorial);
-    // Push initial state
+    
     if (!window.history.state) {
         window.history.replaceState({ viewId: 'bienvenida' }, '', '');
     }
     
     return () => window.removeEventListener('popstate', manejarCambioHistorial);
   }, []);
+
+  React.useEffect(() => {
+    if (vistaActual === 'bienvenida') {
+      localStorage.removeItem('r');
+      localStorage.removeItem('n');
+      localStorage.removeItem('u');
+      setRolUsuario(null);
+      setNombreUsuario('');
+      setIdUsuario(null);
+    }
+  }, [vistaActual]);
 
   const iniciarSesionComo = (rol, nombre, id) => {
     localStorage.setItem('r', rol);
@@ -51,13 +62,23 @@ function App() {
     navegar(inicial);
   };
 
+  const cerrarSesion = () => {
+    localStorage.removeItem('r');
+    localStorage.removeItem('n');
+    localStorage.removeItem('u');
+    setRolUsuario(null);
+    setNombreUsuario('');
+    setIdUsuario(null);
+    navegar('bienvenida');
+  };
+
   return (
     <main id="app-container">
       {vistaActual === 'bienvenida' && <VistaBienvenida navegar={navegar} />}
       {vistaActual === 'acceso' && <VistaAcceso navegar={navegar} iniciarSesionComo={iniciarSesionComo} />}
-      {vistaActual === 'comunicar-averia' && <VistaComunicarAveria navegar={navegar} />}
-      {vistaActual === 'panel-admin' && <VistaAdmin navegar={navegar} rolUsuario={rolUsuario} nombreUsuario={nombreUsuario} idUsuario={idUsuario} actualizarPerfil={setNombreUsuario} />}
-      {vistaActual === 'panel-personal' && <VistaPersonal navegar={navegar} rolUsuario={rolUsuario} nombreUsuario={nombreUsuario} idUsuario={idUsuario} actualizarPerfil={setNombreUsuario} />}
+      {vistaActual === 'comunicar-averia' && <VistaComunicarAveria navegar={navegar} idUsuario={idUsuario} />}
+      {vistaActual === 'panel-admin' && <VistaAdmin navegar={navegar} rolUsuario={rolUsuario} nombreUsuario={nombreUsuario} idUsuario={idUsuario} actualizarPerfil={setNombreUsuario} cerrarSesion={cerrarSesion} />}
+      {vistaActual === 'panel-personal' && <VistaPersonal navegar={navegar} rolUsuario={rolUsuario} nombreUsuario={nombreUsuario} idUsuario={idUsuario} actualizarPerfil={setNombreUsuario} cerrarSesion={cerrarSesion} />}
       {vistaActual === 'crear-usuario' && <VistaCrearUsuario navegar={navegar} />}
       {vistaActual === 'usuarios-averias' && <VistaUsuariosAverias navegar={navegar} rolUsuario={rolUsuario} />}
     </main>
